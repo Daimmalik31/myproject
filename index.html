@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopeGoo - Sign In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 rgba(36, 180, 126, 0); }
+            50% { box-shadow: 0 0 10px rgba(36, 180, 126, 0.5); }
+            100% { box-shadow: 0 0 0 rgba(36, 180, 126, 0); }
+        }
+        
+        body {
+            background-image: url('/api/placeholder/800/600');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background-color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .logo {
+            color: #24b47e;
+            font-weight: bold;
+            font-size: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #24b47e;
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #444;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav a:hover {
+            color: #24b47e;
+        }
+        
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #24b47e;
+            transition: width 0.3s ease;
+        }
+        
+        .nav a:hover::after {
+            width: 100%;
+        }
+        
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .language:hover {
+            transform: scale(1.05);
+        }
+        
+        .language img {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 20px;
+        }
+        
+        .signin-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 760px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+            transition: all 0.3s ease;
+        }
+        
+        .signin-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        
+        .signin-container {
+            display: flex;
+            gap: 40px;
+            justify-content: space-between;
+        }
+        
+        .signin-left {
+            flex: 1;
+            animation: slideIn 0.8s ease-out 0.4s both;
+        }
+        
+        .signin-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            animation: slideIn 0.8s ease-out 0.6s both;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: #24b47e;
+            animation: slideIn 0.8s ease-out 0.8s both;
+        }
+        
+        .tab-nav {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .tab {
+            cursor: pointer;
+            padding-bottom: 5px;
+            font-weight: bold;
+            color: #777;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:hover {
+            color: #24b47e;
+        }
+        
+        .tab.active {
+            color: #24b47e;
+            border-bottom: 2px solid #24b47e;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #24b47e;
+            box-shadow: 0 0 0 3px rgba(36, 180, 126, 0.1);
+            animation: highlight 1.5s ease-out;
+        }
+        
+        .input-field::placeholder {
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus::placeholder {
+            opacity: 0.7;
+            transform: translateX(5px);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-label:hover {
+            color: #24b47e;
+        }
+        
+        .forgot-password {
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .forgot-password:hover {
+            color: #24b47e;
+            text-decoration: underline;
+        }
+        
+        .signin-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6ce5b1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .signin-button:hover {
+            background-color: #24b47e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(36, 180, 126, 0.2);
+        }
+        
+        .signin-button:active {
+            transform: translateY(0);
+        }
+        
+        .signin-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease-out;
+            z-index: -1;
+        }
+        
+        .signin-button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .social-signin {
+            margin-top: 10px;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #444;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .facebook {
+            background-color: #4267B2;
+            color: white;
+        }
+        
+        .facebook:hover {
+            background-color: #365899;
+        }
+        
+        .terms {
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .terms a {
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .terms a:hover {
+            color: #24b47e;
+            text-decoration: underline;
+        }
+        
+        .register {
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .register a {
+            color: #24b47e;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .register a:hover {
+            color: #1a8f5c;
+        }
+        
+        .register a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #24b47e;
+            transition: width 0.3s ease;
+        }
+        
+        .register a:hover::after {
+            width: 100%;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #444;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+        }
+        
+        .feature:hover {
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #24b47e;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover .feature-icon {
+            background-color: #24b47e;
+            color: white;
+            transform: rotate(360deg);
+        }
+        
+        .feature-title {
+            font-weight: bold;
+        }
+        
+        h3 {
+            position: relative;
+            display: inline-block;
+        }
+        
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #24b47e;
+        }
+
+        /* Animation for features */
+        .feature:nth-child(1) {
+            animation: slideIn 0.5s ease-out 0.8s both;
+        }
+        
+        .feature:nth-child(2) {
+            animation: slideIn 0.5s ease-out 1s both;
+        }
+        
+        .feature:nth-child(3) {
+            animation: slideIn 0.5s ease-out 1.2s both;
+        }
+        
+        .feature:nth-child(4) {
+            animation: slideIn 0.5s ease-out 1.4s both;
+        }
+        
+        /* Scale animation for the entire card on page load */
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .signin-card {
+            animation: scaleIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HOPEGOO</div>
+        <div class="nav">
+            <a href="#">App</a>
+            <div class="language">
+                <span>🇺🇸</span>
+                <a href="#">English</a>
+            </div>
+            <a href="#">Contact Us</a>
+            <a href="#">Search Booking</a>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="signin-card">
+            <h1>Sign In</h1>
+            <div class="signin-container">
+                <div class="signin-left">
+                    <div class="tab-nav">
+                        <div class="tab active">Email</div>
+                        <div class="tab">Mobile</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="email" class="input-field" placeholder="Email Address">
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="password" class="input-field" placeholder="Password">
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Save this account within 7 days</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password</a>
+                    </div>
+                    
+                    <div class="input-group">
+                        <button class="signin-button">Sign In</button>
+                    </div>
+                    
+                    <div class="terms">
+                        By signing up as a HOPEGOO member, you have read and agree to the HOPEGOO <a href="#">Terms and Conditions</a> & <a href="#">Privacy Policy</a>
+                    </div>
+                    
+                    <div class="register">
+                        Not yet a member of HOPEGOO? <a href="#">Now register for free</a>
+                    </div>
+                </div>
+                
+                <div class="signin-right">
+                    <div class="social-signin">
+                        <a href="#" class="social-button facebook">
+                            <span>f</span>
+                            <span>Continue with Facebook</span>
+                        </a>
+                        <a href="#" class="social-button">
+                            <span>G</span>
+                            <span>Continue with Google</span>
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <h3>Why HopeGoo?</h3>
+                        <div style="margin-top: 20px;">
+                            <div class="feature">
+                                <div class="feature-icon">$</div>
+                                <div class="feature-title">Affordable Price</div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">★</div>
+                                <div class="feature-title">Top-notch Services</div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-title">Secure Payment</div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-title">Trustworthy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                });
+            });
+            
+            // Add animation to sign in button
+            const signInButton = document.querySelector('.signin-button');
+            signInButton.addEventListener('mouseover', function() {
+                this.style.animation = 'pulse 1s infinite';
+            });
+            
+            signInButton.addEventListener('mouseout', function() {
+                this.style.animation = '';
+            });
+        });
+    </script>
+</body>
+</html>
